@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Assistant</string>
     <string name="work_in_background">Work in background</string>
+    <string name="use_proximity_sensor">Use proximity sensor</string>
+    <string name="setting">Setting</string>
+    <string name="enable">ENABLE</string>
+    <string name="disable">DISABLE</string>
+    <string name="todo">TODO</string>
 </resources>

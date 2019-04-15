@@ -7,9 +7,9 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/descriptionCommand"
         android:layout_width="0dp"
-        android:layout_height="206dp"
+        android:layout_height="294dp"
         android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/command"
+        android:id="@+id/nameCommand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"

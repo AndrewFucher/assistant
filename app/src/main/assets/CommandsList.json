@@ -1,0 +1,20 @@
+{
+    "commands": [
+        {
+            "name" : "call <name>",
+            "description": "This command allows user call someone"
+        },
+        {
+            "name" : "open <name>",
+            "description": "This command allows user open other apps"
+        },
+        {
+            "name" : "mute",
+            "description": "This command allows user to turn off everything that makes device 'alive'"
+        },
+        {
+            "name" : "turn off the screen",
+            "description": "This command allows user to turn off the screen"
+        }
+    ]
+}

@@ -3,10 +3,10 @@ package com.windbora.assistant.fragments;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +16,18 @@ import android.widget.Switch;
 import com.windbora.assistant.R;
 import com.windbora.assistant.fragments.base.BaseFragment;
 
-public class Settings extends BaseFragment {
+public class SettingsAssistant extends BaseFragment {
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor preferencesEditor;
     private SettingsViewModel mViewModel;
-    public Switch backgroundInWork;
+    private Switch backgroundWork;
+    private Switch proximitySensor;
+    public final static String backgroundWorkIsActive = "background_work_is_active";
+    public final static String proximitySensorIsActive = "proximity_sensor_is_active";
 
-    public static Settings newInstance() {
-        return new Settings();
+    public static SettingsAssistant newInstance() {
+        return new SettingsAssistant();
     }
 
 
@@ -42,8 +45,20 @@ public class Settings extends BaseFragment {
 
         findElements();
         accessPreferences();
+
+        proximitySensor.setClickable(false);
+
         setListeners();
 
+        recoverStates();
+
+    }
+
+    private void recoverStates() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            backgroundWork.setSplitTrack(preferences.getBoolean(backgroundWorkIsActive, true));
+            proximitySensor.setSplitTrack(preferences.getBoolean(proximitySensorIsActive, false));
+        }
     }
 
     private void accessPreferences() {
@@ -54,19 +69,27 @@ public class Settings extends BaseFragment {
     private void setListeners() {
 
         // Background work
-        backgroundInWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        backgroundWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                preferencesEditor.putBoolean("is_active_background", isChecked);
+                preferencesEditor.putBoolean(backgroundWorkIsActive, isChecked);
+                preferencesEditor.apply();
             }
         });
 
+        proximitySensor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                preferencesEditor.putBoolean(proximitySensorIsActive, isChecked);
+                preferencesEditor.apply();
+            }
+        });
 
     }
 
     private void findElements() {
-        backgroundInWork = getView().findViewById(R.id.background_work);
-
+        backgroundWork = getView().findViewById(R.id.background_work);
+        proximitySensor = getView().findViewById(R.id.proximity_sensor);
     }
 
     @Override
