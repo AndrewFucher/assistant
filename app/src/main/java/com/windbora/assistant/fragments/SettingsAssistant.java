@@ -1,7 +1,9 @@
 package com.windbora.assistant.fragments;
 
+import android.app.ActivityManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,18 +15,29 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import android.os.Process;
+
 import com.windbora.assistant.R;
+import com.windbora.assistant.backgroundservice.Listener;
+import com.windbora.assistant.checks.Checks;
 import com.windbora.assistant.fragments.base.BaseFragment;
+import com.windbora.assistant.fragments.sharedpreferences.MySharedPreferences;
+
+import java.util.Iterator;
+import java.util.List;
+
+import static android.content.Context.ACTIVITY_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
+import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class SettingsAssistant extends BaseFragment {
 
-    private SharedPreferences preferences;
+    private MySharedPreferences preferences;
     private SharedPreferences.Editor preferencesEditor;
     private SettingsViewModel mViewModel;
     private Switch backgroundWork;
     private Switch proximitySensor;
-    public final static String backgroundWorkIsActive = "background_work_is_active";
-    public final static String proximitySensorIsActive = "proximity_sensor_is_active";
+    private Context context;
 
     public static SettingsAssistant newInstance() {
         return new SettingsAssistant();
@@ -43,6 +56,8 @@ public class SettingsAssistant extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(SettingsViewModel.class);
 
+        setContext();
+
         findElements();
         accessPreferences();
 
@@ -54,16 +69,17 @@ public class SettingsAssistant extends BaseFragment {
 
     }
 
+    private void setContext() {
+        context = getContext();
+    }
+
     private void recoverStates() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            backgroundWork.setSplitTrack(preferences.getBoolean(backgroundWorkIsActive, true));
-            proximitySensor.setSplitTrack(preferences.getBoolean(proximitySensorIsActive, false));
-        }
+        backgroundWork.setChecked(preferences.getWorkInBackground());
+        proximitySensor.setChecked(preferences.getEnableProximitySensor());
     }
 
     private void accessPreferences() {
-        preferences = getContext().getSharedPreferences("SettingsData", Context.MODE_PRIVATE);
-        preferencesEditor = preferences.edit();
+        preferences = new MySharedPreferences(MODE_PRIVATE, getContext());
     }
 
     private void setListeners() {
@@ -72,16 +88,19 @@ public class SettingsAssistant extends BaseFragment {
         backgroundWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                preferencesEditor.putBoolean(backgroundWorkIsActive, isChecked);
-                preferencesEditor.apply();
+                if (!isChecked) {
+                    Checks.stopListenerService(context);
+                } else if (isChecked && Checks.isServiceRunning(Listener.class, context)){
+                    context.startService(new Intent(context, Listener.class));
+                }
+                preferences.setWorkInBackground();
             }
         });
 
         proximitySensor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                preferencesEditor.putBoolean(proximitySensorIsActive, isChecked);
-                preferencesEditor.apply();
+                preferences.setEnableProximitySensor();
             }
         });
 

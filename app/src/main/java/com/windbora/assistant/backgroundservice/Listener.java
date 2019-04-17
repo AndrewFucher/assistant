@@ -32,6 +32,7 @@ public class Listener extends Service {
 
     @Override
     public void onCreate() {
+        super.onCreate();
 
     }
 
@@ -48,7 +49,7 @@ public class Listener extends Service {
     }
 
     private void initWidget() {
-        requestUsageStatsPermission();
+        // requestUsageStatsPermission();
         initView();
     }
 
@@ -156,7 +157,7 @@ public class Listener extends Service {
         windowManager.addView(floatingView, params);
         Log.d("Error", windowManager.toString() + "FINDME");
 
-        Toast.makeText(getApplicationContext(), floatingView.toString(), Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), floatingView.toString(), Toast.LENGTH_LONG).show();
 
        /* params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,

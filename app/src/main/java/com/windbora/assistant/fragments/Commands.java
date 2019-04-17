@@ -42,8 +42,8 @@ public class Commands extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         try {
-            adapter = new CommandsAdapter(JsonParser.getDetails(getActivity().getFilesDir() + "/CommandsList.json").getCommands());
-            Toast.makeText(view.getContext(), JsonParser.getDetails(getActivity().getFilesDir() + "/CommandsList.json").getCommands().toString(), Toast.LENGTH_LONG).show();
+            adapter = new CommandsAdapter(JsonParser.getDetails(getContext()).getCommands());
+            Toast.makeText(view.getContext(), "FIND ME ME ME" + JsonParser.getDetails(getContext()).getCommands().toString(), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }

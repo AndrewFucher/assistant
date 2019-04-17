@@ -1,5 +1,6 @@
 {
-    "commands": [
+    "commands":
+    [
         {
             "name" : "call <name>",
             "description": "This command allows user call someone"
