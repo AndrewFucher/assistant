@@ -11,6 +11,9 @@ public class Command {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("able")
+    @Expose
+    private String able;
 
     public String getName() {
         return name;
@@ -26,6 +29,14 @@ public class Command {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAble() {
+        return able;
+    }
+
+    public void setAble(String able) {
+        this.able = able;
     }
 
 }

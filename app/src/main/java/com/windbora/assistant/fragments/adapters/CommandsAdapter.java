@@ -55,19 +55,23 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
 
         public void onBind(final Command commandData){
 
-            commandButton.setText(commandData.getName());
-            commandButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            if (commandData.getAble().equals("enable")) {
+                commandButton.setText(commandData.getName());
+                commandButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
 
-                    Intent intent = new Intent(itemView.getContext(), CommandActivity.class);
-                    intent.putExtra("name", commandData.getName());
-                    intent.putExtra("description", commandData.getDescription());
-                    v.getContext().startActivity(intent);
-                }
-            });
-
+                        Intent intent = new Intent(itemView.getContext(), CommandActivity.class);
+                        intent.putExtra("name", commandData.getName());
+                        intent.putExtra("description", commandData.getDescription());
+                        v.getContext().startActivity(intent);
+                    }
+                });
+            } else {
+                commandButton.setClickable(false);
+                commandButton.setVisibility(View.INVISIBLE);
+            }
         }
     }
 

@@ -3,19 +3,23 @@
     [
         {
             "name" : "call <name>",
-            "description": "This command allows user call someone"
+            "description": "This command allows user call someone",
+            "able": "enable"
         },
         {
             "name" : "open <name>",
-            "description": "This command allows user open other apps"
+            "description": "This command allows user open other apps",
+            "able": "disable"
         },
         {
             "name" : "mute",
-            "description": "This command allows user to turn off everything that makes device 'alive'"
+            "description": "This command allows user to turn off everything that makes device 'alive'",
+            "able": "disable"
         },
         {
             "name" : "turn off the screen",
-            "description": "This command allows user to turn off the screen"
+            "description": "This command allows user to turn off the screen",
+            "able": "disable"
         }
     ]
 }
