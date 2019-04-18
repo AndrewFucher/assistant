@@ -6,4 +6,5 @@
     <string name="enable">ENABLE</string>
     <string name="disable">DISABLE</string>
     <string name="todo">TODO</string>
+    <string name="msg">Please enable all permissions</string>
 </resources>

@@ -1,18 +1,24 @@
 package com.windbora.assistant;
 
-import android.app.ActivityManager;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.SparseIntArray;
+import android.view.View;
 import android.widget.Toast;
 
 import com.windbora.assistant.backgroundservice.Listener;
@@ -32,20 +38,29 @@ import static com.windbora.assistant.RunVoiceRecognitionIntent.VOICE_RECOGNITION
 public class MainActivity extends AppCompatActivity {
 
     public final static int DRAW_OVER_OTHER_APP_PERMISSION = 5469;
+    public final static int REQUEST_PERMISSION = 10;
 
     ViewPager viewPager;
     TabLayout tabLayout;
-    SharedPreferences preferences;
     Context context;
+    SparseIntArray sparseIntArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sparseIntArray = new SparseIntArray();
+
         getContext();
         findElements();
         addFragments();
+        requestAppPermissions(new String[]{
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.SYSTEM_ALERT_WINDOW,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CALL_PHONE},
+                R.string.msg, REQUEST_PERMISSION);
         askForSystemOverlayPermission();
 
         MySharedPreferences preferences = new MySharedPreferences(MODE_PRIVATE, getApplicationContext());
@@ -117,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 }
-
+                break;
                 case VOICE_RECOGNITION_REQUEST_CODE:
 
                     List<String> command = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -129,6 +144,66 @@ public class MainActivity extends AppCompatActivity {
                     if (bestMatch.contains("call")) {
                         DoCommands.makeCall(context, bestMatch);
                     }
+                    break;
+        }
+    }
+
+    public void onPermissionGranted(int requestCode){};
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int permissionCheck = PackageManager.PERMISSION_GRANTED;
+        for (int permission: grantResults) {
+            permissionCheck = permissionCheck + permission;
+        }
+        if (grantResults.length > 0 && PackageManager.PERMISSION_GRANTED == permissionCheck) {
+            onPermissionGranted(requestCode);
+        } else {
+            try {
+
+                Snackbar.make(findViewById(R.id.content), sparseIntArray.get(requestCode), Snackbar.LENGTH_INDEFINITE).setAction("ENABLE", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                        startActivity(intent);
+                    }
+                }).show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestAppPermissions(final String[] requestedPermissions, final int stringID, final int requestCode) {
+        sparseIntArray.put(requestCode, stringID);
+
+        int permissionCheck = PackageManager.PERMISSION_GRANTED;
+        boolean showRequestPermission = false;
+        for (String permission: requestedPermissions) {
+            permissionCheck = permissionCheck + ContextCompat.checkSelfPermission(this, permission);
+            showRequestPermission = showRequestPermission || shouldShowRequestPermissionRationale(permission);
+        }
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (showRequestPermission) {
+                Snackbar.make(findViewById(R.id.content), stringID, Snackbar.LENGTH_INDEFINITE).setAction("GRANT", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ActivityCompat.requestPermissions(MainActivity.this, requestedPermissions, requestCode);
+                    }
+                }).show();
+            } else {
+                ActivityCompat.requestPermissions(this, requestedPermissions, requestCode);
+            }
+        } else {
+            onPermissionGranted(requestCode);
+        }
     }
 }

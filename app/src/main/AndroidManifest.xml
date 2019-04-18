@@ -22,6 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CommandActivity" />
+        <activity android:name=".RunVoiceRecognitionIntent" />
 
         <service android:name=".backgroundservice.Listener"
             android:process=":backgroundservice"

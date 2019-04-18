@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.Command;
 import com.windbora.assistant.CommandActivity;
@@ -16,11 +18,14 @@ import com.windbora.assistant.R;
 import java.util.List;
 
 public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHolder> {
-    private Button commandButton;
-    private List<Command> results;
 
-    public CommandsAdapter(List<Command> results) {
+    private List<Command> results;
+    private Context context;
+
+    public CommandsAdapter(List<Command> results, Context context) {
         this.results = results;
+        this.context = context;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -40,9 +45,12 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+
+        private Button commandButton;
+
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            commandButton = itemView.findViewById(R.id.command_button);
+            commandButton = itemView.findViewById(R.id.linkButtonDescription);
         }
 
         public void onBind(final Command commandData){
@@ -51,9 +59,12 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
             commandButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
                     Intent intent = new Intent(itemView.getContext(), CommandActivity.class);
                     intent.putExtra("name", commandData.getName());
                     intent.putExtra("description", commandData.getDescription());
+                    v.getContext().startActivity(intent);
                 }
             });
 

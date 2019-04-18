@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/command_button"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="51dp">
 
     <Button
         android:id="@+id/linkButtonDescription"
-        android:background="@drawable/command_button_bg"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
+        android:background="@drawable/command_button_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

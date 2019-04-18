@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class JsonParser {
 
@@ -33,10 +34,18 @@ public class JsonParser {
         Gson gson = new Gson();
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(new File( fileName)));
-            result = gson.fromJson(br, CommandsList.class);
+            br = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            result = gson.fromJson(stringBuilder.toString(), CommandsList.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             if (br != null) {
                 try {

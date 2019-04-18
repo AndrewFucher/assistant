@@ -39,11 +39,11 @@ public class Commands extends BaseFragment {
 
         findElements(view);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         try {
-            adapter = new CommandsAdapter(JsonParser.getDetails(getContext()).getCommands());
-            Toast.makeText(view.getContext(), "FIND ME ME ME" + JsonParser.getDetails(getContext()).getCommands().toString(), Toast.LENGTH_LONG).show();
+            adapter = new CommandsAdapter(JsonParser.getDetails(getContext()).getCommands(), getContext());
+            recyclerView.setAdapter(adapter);
         } catch (Exception e) {
             Toast.makeText(view.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }

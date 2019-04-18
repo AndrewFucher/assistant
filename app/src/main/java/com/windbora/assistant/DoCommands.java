@@ -1,6 +1,5 @@
 package com.windbora.assistant;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,10 +31,9 @@ public class DoCommands{
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     if (cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)).toLowerCase().equals(string.toLowerCase())) {
-                        number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        break;
+                        number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));break;
                     }
-                    Toast.makeText(context, cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)), Toast.LENGTH_LONG).show();
+                    // Toast.makeText(context, cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)), Toast.LENGTH_LONG).show();
                 }
             }
             cursor.close();

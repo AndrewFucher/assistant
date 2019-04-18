@@ -74,8 +74,12 @@ public class SettingsAssistant extends BaseFragment {
     }
 
     private void recoverStates() {
-        backgroundWork.setChecked(preferences.getWorkInBackground());
-        proximitySensor.setChecked(preferences.getEnableProximitySensor());
+        if (preferences.getWorkInBackground()) {
+            backgroundWork.setChecked(true);
+        }
+        if (preferences.getEnableProximitySensor()) {
+            proximitySensor.setChecked(true);
+        }
     }
 
     private void accessPreferences() {
@@ -88,9 +92,9 @@ public class SettingsAssistant extends BaseFragment {
         backgroundWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) {
+                if (preferences.getWorkInBackground()) {
                     Checks.stopListenerService(context);
-                } else if (isChecked && Checks.isServiceRunning(Listener.class, context)){
+                } else if (!preferences.getWorkInBackground() && !Checks.isServiceRunning(Listener.class, context)){
                     context.startService(new Intent(context, Listener.class));
                 }
                 preferences.setWorkInBackground();
