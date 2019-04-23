@@ -7,9 +7,14 @@
             "able": "enable"
         },
         {
+            "name" : "set brightness to <number from 0 to 255>",
+            "description": "This command allows user to set brightness of the screen",
+            "able": "enable"
+        },
+        {
             "name" : "open <name>",
             "description": "This command allows user open other apps",
-            "able": "disable"
+            "able": "enable"
         },
         {
             "name" : "mute",

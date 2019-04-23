@@ -3,6 +3,7 @@ package com.windbora.assistant.checks;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Process;
+import android.util.Log;
 
 import java.util.Iterator;
 import java.util.List;
@@ -25,16 +26,13 @@ public class Checks {
         ActivityManager am = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
 
-        Iterator<ActivityManager.RunningAppProcessInfo> iter = runningAppProcesses.iterator();
+        for (ActivityManager.RunningAppProcessInfo next : runningAppProcesses) {
+            String processName = context.getPackageName() + ":backgroundservice";
 
-        while (iter.hasNext()) {
-            ActivityManager.RunningAppProcessInfo next = iter.next();
-
-            String processName = context.getPackageName() + ":backgroundwork";
+//            Log.d("msg", next.processName + " FIND ME");
 
             if (next.processName.equals(processName)) {
                 Process.killProcess(next.pid);
-                break;
             }
         }
     }

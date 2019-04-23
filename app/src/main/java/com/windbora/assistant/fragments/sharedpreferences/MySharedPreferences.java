@@ -10,7 +10,7 @@ public class MySharedPreferences implements ISharedPreferences {
 
     private Context context;
     private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+//    private SharedPreferences.Editor editor;
     private String sharedPreferencesName = "SettingData";
     private int mode;
 
@@ -18,14 +18,15 @@ public class MySharedPreferences implements ISharedPreferences {
         this.mode = mode;
         this.context = context;
         this.sharedPreferences = this.context.getSharedPreferences(sharedPreferencesName, mode);
-        this.editor = sharedPreferences.edit();
-        this.editor.apply();
+//        this.editor = sharedPreferences.edit();
+//        this.editor.apply();
     }
 
     @Override
     public void setWorkInBackground() {
-        this.editor.putBoolean(backgroundWorkIsActive, !sharedPreferences.getBoolean(backgroundWorkIsActive, true));
-        this.editor.apply();
+        this.sharedPreferences.edit().putBoolean(backgroundWorkIsActive, !getWorkInBackground()).apply();
+//        this.editor.putBoolean(backgroundWorkIsActive, !sharedPreferences.getBoolean(backgroundWorkIsActive, true));
+//        this.editor.apply();
     }
 
     @Override
@@ -35,8 +36,9 @@ public class MySharedPreferences implements ISharedPreferences {
 
     @Override
     public void setEnableProximitySensor() {
-        this.editor.putBoolean(proximitySensorIsActive, !sharedPreferences.getBoolean(proximitySensorIsActive, true));
-        this.editor.apply();
+        this.sharedPreferences.edit().putBoolean(proximitySensorIsActive, getEnableProximitySensor()).apply();
+//        this.editor.putBoolean(proximitySensorIsActive, !sharedPreferences.getBoolean(proximitySensorIsActive, true));
+//        this.editor.apply();
     }
 
     @Override

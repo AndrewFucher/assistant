@@ -1,11 +1,8 @@
 package com.windbora.assistant.fragments;
 
-import android.app.ActivityManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import android.os.Process;
 
 import com.windbora.assistant.R;
 import com.windbora.assistant.backgroundservice.Listener;
@@ -23,17 +19,11 @@ import com.windbora.assistant.checks.Checks;
 import com.windbora.assistant.fragments.base.BaseFragment;
 import com.windbora.assistant.fragments.sharedpreferences.MySharedPreferences;
 
-import java.util.Iterator;
-import java.util.List;
-
-import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
-import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class SettingsAssistant extends BaseFragment {
 
     private MySharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
     private SettingsViewModel mViewModel;
     private Switch backgroundWork;
     private Switch proximitySensor;
@@ -61,11 +51,11 @@ public class SettingsAssistant extends BaseFragment {
         findElements();
         accessPreferences();
 
+        recoverStates();
+
         proximitySensor.setClickable(false);
 
         setListeners();
-
-        recoverStates();
 
     }
 
@@ -92,11 +82,12 @@ public class SettingsAssistant extends BaseFragment {
         backgroundWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (preferences.getWorkInBackground()) {
+                if (!isChecked) {
                     Checks.stopListenerService(context);
-                } else if (!preferences.getWorkInBackground() && !Checks.isServiceRunning(Listener.class, context)){
+                } else {
                     context.startService(new Intent(context, Listener.class));
                 }
+//                Toast.makeText(context, String.valueOf(preferences.getWorkInBackground()), Toast.LENGTH_SHORT).show();
                 preferences.setWorkInBackground();
             }
         });

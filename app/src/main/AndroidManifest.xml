@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.windbora.assistant">
 
     <!-- Permissions -->
@@ -7,6 +8,10 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,13 +29,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".CommandActivity" />
-        <activity android:name=".RunVoiceRecognitionIntent" />
+        <activity android:name=".RunVoiceRecognition" />
 
         <service android:name=".backgroundservice.Listener"
             android:process=":backgroundservice"
             android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.SYSTEM_ALERT_WINDOW" />
+            android:exported="false" />
 
     </application>
 

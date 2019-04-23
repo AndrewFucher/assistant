@@ -10,8 +10,10 @@
     <ImageView
         android:id="@+id/command_button"
         android:layout_width="34dp"
-        android:layout_height="32dp"
-        app:srcCompat="@drawable/ic_play"
+        android:layout_height="34dp"
+        android:visibility="visible"
+        android:src="@mipmap/ic_microphone_layer"
+        app:srcCompat="@mipmap/ic_microphone_layer"
         tools:ignore="ContentDescription"
-        tools:srcCompat="@drawable/ic_play" />
+        tools:srcCompat="@mipmap/ic_microphone_layer" />
 </FrameLayout>
