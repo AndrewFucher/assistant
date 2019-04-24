@@ -1,16 +1,12 @@
 package com.windbora.assistant;
 
 import android.Manifest;
-import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
-import android.os.PowerManager;
 import android.provider.Settings;
-import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
@@ -21,16 +17,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseIntArray;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.windbora.assistant.backgroundservice.Listener;
-import com.windbora.assistant.checks.Checks;
 import com.windbora.assistant.fragments.Commands;
 import com.windbora.assistant.fragments.Play;
 import com.windbora.assistant.fragments.SettingsAssistant;
@@ -39,9 +30,6 @@ import com.windbora.assistant.fragments.base.BaseFragment;
 import com.windbora.assistant.fragments.sharedpreferences.MySharedPreferences;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.windbora.assistant.RunVoiceRecognition.VOICE_RECOGNITION_REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.SYSTEM_ALERT_WINDOW,
                     Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.CALL_PHONE},
+                    Manifest.permission.CALL_PHONE,
+                    Manifest.permission.SET_ALARM},
                     R.string.msg, REQUEST_PERMISSION);
 
             askForSystemSettingWritePermission();
@@ -84,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        Toast.makeText(context, String.valueOf(preferences.getWorkInBackground()), Toast.LENGTH_SHORT).show();
-        if (preferences.getWorkInBackground() && !Checks.isServiceRunning(Listener.class, context)) {
+        if (preferences.getWorkInBackground()) {
             startWidgetService();
 //            floatingWindow();
         }
@@ -128,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         // Tabs icons
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_play);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_commands);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_settings);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_gear);
 
     }
 

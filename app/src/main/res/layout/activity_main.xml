@@ -10,9 +10,13 @@
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:background="#D9C330"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabIndicatorColor="#C3E8DD"
+        app:tabIndicatorHeight="4dp"
+        app:tabTextColor="#FFFFFF">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"

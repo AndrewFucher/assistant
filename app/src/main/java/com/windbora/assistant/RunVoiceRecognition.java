@@ -56,12 +56,12 @@ public class RunVoiceRecognition extends Activity{
 
                     if (bestMatch.contains("call")) {
                         DoCommands.makeCall(this, bestMatch);
-                    } else if (bestMatch.equals("turn off the screen")) {
-                        DoCommands.turnOffTheScreen(this, getWindow());
                     } else if (bestMatch.contains("set brightness to ")) {
                         DoCommands.setBrightnessTo(this, bestMatch);
                     } else if (bestMatch.contains("open")) {
                         DoCommands.open(this, bestMatch);
+                    } else if (bestMatch.contains("set") && bestMatch.contains("alarm")) {
+                        DoCommands.setTheAlarmFor(this, bestMatch);
                     }
                 } catch (NullPointerException e) {
                     Toast.makeText(this, "You didn't say anything", Toast.LENGTH_SHORT).show();

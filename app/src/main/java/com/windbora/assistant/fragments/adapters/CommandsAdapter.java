@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.Command;
@@ -47,16 +48,28 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private Button commandButton;
+        private ImageView imageView;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             commandButton = itemView.findViewById(R.id.linkButtonDescription);
+            imageView = itemView.findViewById(R.id.imageView);
         }
 
         public void onBind(final Command commandData){
 
             if (commandData.getAble().equals("enable")) {
-                commandButton.setText(commandData.getName());
+
+                Context myContext = imageView.getContext();
+
+                int imageID = myContext.getResources().getIdentifier(commandData.getImageName(), "drawable", myContext.getPackageName());
+
+                imageView.setImageResource(imageID);
+
+                String indent = new String(new char[commandData.getNameBut().length() / 2 ]).replace("\0", " ");
+                String title = indent + commandData.getNameBut();
+
+                commandButton.setText(title);
                 commandButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -14,14 +14,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="140dp"
-        android:checked="false"
         android:text="@string/work_in_background"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:checked="false" />
+        android:theme="@style/SwitchTheme"/>
 
     <TextView
         android:id="@+id/settingTitle"
@@ -43,11 +42,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:focusable="false"
         android:text="@string/use_proximity_sensor"
+        android:textColor="#817F7F"
         android:textOff="@string/disable"
         android:textOn="@string/enable"
         android:textSize="24sp"
-        android:focusable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/background_work" />

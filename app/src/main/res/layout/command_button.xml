@@ -4,14 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/command_button"
     android:layout_width="match_parent"
-    android:layout_height="51dp">
+    android:layout_height="60dp">
 
     <Button
         android:id="@+id/linkButtonDescription"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@drawable/command_button_bg"
+        android:layout_height="0dp"
+        android:textColor="#223834"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/command_button"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="@+id/command_button"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

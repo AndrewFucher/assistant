@@ -1,9 +1,11 @@
 package com.windbora.assistant.fragments;
 
+import android.app.ActivityManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,12 +15,15 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 
+import com.windbora.assistant.MainActivity;
 import com.windbora.assistant.R;
 import com.windbora.assistant.backgroundservice.Listener;
-import com.windbora.assistant.checks.Checks;
 import com.windbora.assistant.fragments.base.BaseFragment;
 import com.windbora.assistant.fragments.sharedpreferences.MySharedPreferences;
 
+import java.util.List;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 public class SettingsAssistant extends BaseFragment {
@@ -83,7 +88,7 @@ public class SettingsAssistant extends BaseFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
-                    Checks.stopListenerService(context);
+                    stopMyListener();
                 } else {
                     context.startService(new Intent(context, Listener.class));
                 }
@@ -99,6 +104,21 @@ public class SettingsAssistant extends BaseFragment {
             }
         });
 
+    }
+
+    private void stopMyListener() {
+        ActivityManager am = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
+
+        for (ActivityManager.RunningAppProcessInfo next : runningAppProcesses) {
+            String processName = context.getPackageName() + ":backgroundservice";
+
+//            Log.d("msg", next.processName + " FIND ME");
+
+            if (next.processName.equals(processName)) {
+                Process.killProcess(next.pid);
+            }
+        }
     }
 
     private void findElements() {

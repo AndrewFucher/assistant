@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.windbora.assistant.R;
 import com.windbora.assistant.RunVoiceRecognition;
-import com.windbora.assistant.checks.Checks;
 import com.windbora.assistant.fragments.sharedpreferences.MySharedPreferences;
 
 import java.util.Calendar;

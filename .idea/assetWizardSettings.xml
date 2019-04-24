@@ -51,7 +51,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="50" />
+                                                <entry key="scalingPercent" value="61" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -61,10 +61,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundLayerName" value="ic_microphone_background_layer" />
-                                      <entry key="foregroundImage" value="D:\work\1x\microphon_png.png" />
-                                      <entry key="foregroundLayerName" value="ic_microphone_layer" />
-                                      <entry key="outputName" value="microphone_png" />
+                                      <entry key="backgroundLayerName" value="ic_microphone_svg_background_layer" />
+                                      <entry key="foregroundImage" value="D:\work\1x\Шар 1aa.png" />
+                                      <entry key="foregroundLayerName" value="ic_microphone_svg_layer" />
+                                      <entry key="outputName" value="microphone_svg" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -133,8 +133,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_play" />
-                            <entry key="sourceFile" value="D:\work\microphone-of-voice.svg" />
+                            <entry key="outputName" value="micophone_play" />
+                            <entry key="sourceFile" value="C:\Users\McAndrii\Downloads\microphone-of-voice.svg" />
                           </map>
                         </option>
                       </PersistentState>

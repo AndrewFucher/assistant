@@ -1,7 +1,10 @@
 package com.windbora.assistant;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.admin.DevicePolicyManager;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +14,15 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.PowerManager;
+import android.provider.AlarmClock;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -140,6 +146,78 @@ public class DoCommands{
             }
         } else {
             Toast.makeText(context, "Did not find such app", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public class AlarmReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "GIIIIIIG", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void setTheAlarmFor(Context context, String string) {
+
+        string = string.replace("set ", "");
+        string = string.replace("alarm ", "");
+
+        String[] strings = string.split(" ");
+        String[] time = new String[2];
+        List<String> list = new ArrayList<>();
+        int hours;
+        int minutes;
+
+        for (String a : strings) {
+            if (a.matches(".*\\d.*")) {
+                if (a.contains(":")) {
+                    time = a.split(":");
+                } else {
+                    list.add(a);
+                }
+            }
+        }
+        if (list.size() < 2) {
+            if (time.length == 1) {
+                time = time[0].split(" ");
+            }
+
+            if (time.length == 1) {
+                return;
+            }
+            hours = Integer.valueOf(time[0]);
+            minutes = Integer.valueOf(time[1]);
+        } else {
+            hours = Integer.valueOf(list.get(0));
+            minutes = Integer.valueOf(list.get(1));
+        }
+
+        if (hours >= 0 && minutes >= 0) {
+            AlarmManager alarmMgr;
+            PendingIntent alarmIntent;
+            alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(context, AlarmReceiver.class);
+            alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+            // Set the alarm to start at 8:30 a.m.
+            Calendar calNow = Calendar.getInstance();
+            Calendar calSet = (Calendar) calNow.clone();
+
+            calSet.set(Calendar.HOUR_OF_DAY, hours);
+            calSet.set(Calendar.MINUTE, minutes);
+
+            if (calSet.compareTo(calNow) <= 0) {
+                // Today Set time passed, count to tomorrow
+                calSet.add(Calendar.DATE, 1);
+            }
+
+            // setRepeating() lets you specify a precise custom interval--in this case,
+            // 20 minutes.
+            //        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+            //                1000 * 60 * 20, alarmIntent);
+
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), alarmIntent);
+        } else {
+            Toast.makeText(context, "Couldn't set alarm", Toast.LENGTH_SHORT).show();
         }
     }
 }

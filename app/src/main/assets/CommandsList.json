@@ -3,26 +3,34 @@
     [
         {
             "name" : "call <name>",
+            "nameBut": "call",
             "description": "This command allows user call someone",
+            "imageName" : "call_svg",
             "able": "enable"
         },
         {
             "name" : "set brightness to <number from 0 to 255>",
+            "nameBut": "set brightness",
             "description": "This command allows user to set brightness of the screen",
+            "imageName" : "brightness_svg",
             "able": "enable"
         },
         {
             "name" : "open <name>",
+            "nameBut": "open",
             "description": "This command allows user open other apps",
+            "imageName" : "open_svg",
             "able": "enable"
         },
         {
             "name" : "mute",
+            "nameBut": "mute",
             "description": "This command allows user to turn off everything that makes device 'alive'",
             "able": "disable"
         },
         {
             "name" : "turn off the screen",
+            "nameBut": "turn off the screen",
             "description": "This command allows user to turn off the screen",
             "able": "disable"
         }
