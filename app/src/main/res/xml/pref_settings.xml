@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="run_in_background_key"
+        android:title="Run in background"
+        android:layout="@layout/preferences_category">
+
+        <SwitchPreference
+            android:id="@+id/background_work_pref"
+            android:key="background_work_pref"
+            android:summaryOff="@string/does_not_work_in_background"
+            android:summaryOn="@string/does_work_in_background"
+            android:title="Run in background"
+            android:paddingLeft="0dp" />
+
+        <!--android:layout="@layout/switch_settings_layout"-->
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

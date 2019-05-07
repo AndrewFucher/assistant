@@ -1,4 +1,4 @@
-package com.example;
+package com.windbora.assistant.base;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

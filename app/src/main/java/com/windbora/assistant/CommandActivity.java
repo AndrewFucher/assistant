@@ -1,12 +1,13 @@
 package com.windbora.assistant;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.TextView;
 
-public class CommandActivity extends Activity {
+public class CommandActivity extends AppCompatActivity {
 
     TextView nameText;
     TextView descriptionText;
@@ -20,6 +21,8 @@ public class CommandActivity extends Activity {
 
         getElements();
 
+        setupActionBar();
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             commandDescription = extras.getString("description", "None");
@@ -27,6 +30,26 @@ public class CommandActivity extends Activity {
         }
 
         setText();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+//                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setText() {

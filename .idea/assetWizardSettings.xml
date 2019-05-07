@@ -29,10 +29,34 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="text">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="D:\work\SVG\Шар 1.svg" />
                                       <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="ffffff" />
                                     </map>
@@ -45,6 +69,17 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="foregroundClipArt">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundImage">
                                         <value>
                                           <PersistentState>
@@ -62,7 +97,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundLayerName" value="ic_microphone_svg_background_layer" />
-                                      <entry key="foregroundImage" value="D:\work\1x\Шар 1aa.png" />
+                                      <entry key="foregroundAssetType" value="CLIP_ART" />
+                                      <entry key="foregroundImage" value="D:\work\1x\Шар 1aa.p" />
                                       <entry key="foregroundLayerName" value="ic_microphone_svg_layer" />
                                       <entry key="outputName" value="microphone_svg" />
                                     </map>
@@ -114,6 +150,11 @@
                             </entry>
                           </map>
                         </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
+                          </map>
+                        </option>
                       </PersistentState>
                     </value>
                   </entry>
@@ -133,8 +174,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="micophone_play" />
-                            <entry key="sourceFile" value="C:\Users\McAndrii\Downloads\microphone-of-voice.svg" />
+                            <entry key="outputName" value="ic_microphone_listener" />
+                            <entry key="sourceFile" value="D:\work\SVG\Шар 1.svg" />
                           </map>
                         </option>
                       </PersistentState>

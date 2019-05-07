@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#555C28</color>
+    <color name="colorPrimaryDark">#555C28</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorNoImage">#00cc66</color>
+    <color name="main_menu_color">#FFFFFF</color>
+    <color name="colorPreferenceCategory">#cc33ff</color>
+
+    <color name="textColorSecondary" >#000000</color>
+
+    <color name="colorPrimarySecond">#772A2A</color>
+    <color name="colorPrimaryDarkSecond">#97A0D6</color>
+    <color name="colorAccentSecond">#B15A84</color>
+    <color name="textColorPrimarySecond">#A29015</color>
+
+    <!--<color name="colorPrimaryMain">#0F2F97</color>-->
+    <!--<color name="colorPrimaryDarkMain">#1331B4</color>-->
+    <!--<color name="colorAccentMain">#B15A84</color>-->
+    <!--<color name="textColorPrimaryMain">#DBD5D5</color>-->
+    <!--<color name="colorPrimarySettings">#8D3F3F</color>-->
+    <!--<color name="colorPrimaryDarkSettings">#0C4D1E</color>-->
+    <!--<color name="colorAccentSettings">#E26D14CA</color>-->
+    <!--<color name="textColorPrimarySettings">#8D7615</color>-->
+    <!--<color name="colorPrimaryDescription">#FFFFFF</color>-->
+    <!--<color name="colorPrimaryDarkDescription">#A473D5</color>-->
+    <!--<color name="colorAccentDescription">#E2865454</color>-->
+    <!--<color name="textColorPrimaryDescription">#000000</color>-->
 </resources>
+<!-- #008577 -->

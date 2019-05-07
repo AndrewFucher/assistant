@@ -1,4 +1,4 @@
-package com.windbora.assistant.fragments.sharedpreferences;
+package com.windbora.assistant.sharedpreferences;
 
 public interface ISharedPreferences {
 

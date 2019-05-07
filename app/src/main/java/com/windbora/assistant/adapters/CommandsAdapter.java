@@ -1,18 +1,16 @@
-package com.windbora.assistant.fragments.adapters;
+package com.windbora.assistant.adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.example.Command;
+import com.windbora.assistant.base.Command;
 import com.windbora.assistant.CommandActivity;
 import com.windbora.assistant.R;
 
@@ -47,13 +45,13 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private Button commandButton;
+        private TextView textView;
         private ImageView imageView;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            commandButton = itemView.findViewById(R.id.linkButtonDescription);
-            imageView = itemView.findViewById(R.id.imageView);
+            textView = itemView.findViewById(R.id.command_button_text);
+            imageView = itemView.findViewById(R.id.command_button_image);
         }
 
         public void onBind(final Command commandData){
@@ -61,29 +59,34 @@ public class CommandsAdapter extends RecyclerView.Adapter<CommandsAdapter.ViewHo
             if (commandData.getAble().equals("enable")) {
 
                 Context myContext = imageView.getContext();
-
                 int imageID = myContext.getResources().getIdentifier(commandData.getImageName(), "drawable", myContext.getPackageName());
 
-                imageView.setImageResource(imageID);
+                if (imageID != 0) {
+                    imageView.setImageResource(imageID);
+                } else {
+                    imageView.setBackgroundColor(myContext.getResources().getColor(R.color.colorNoImage));
+                }
 
-                String indent = new String(new char[commandData.getNameBut().length() / 2 ]).replace("\0", " ");
-                String title = indent + commandData.getNameBut();
+//                String indent = new String(new char[commandData.getNameBut().length() / 2 ]).replace("\0", " ");
+//                String title = indent + commandData.getNameBut();
 
-                commandButton.setText(title);
-                commandButton.setOnClickListener(new View.OnClickListener() {
+//                textView.setText(title);
+                textView.setText(commandData.getNameBut());
+                textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
 
-                        Intent intent = new Intent(itemView.getContext(), CommandActivity.class);
+                        Intent intent = new Intent(context, CommandActivity.class);
                         intent.putExtra("name", commandData.getName());
                         intent.putExtra("description", commandData.getDescription());
-                        v.getContext().startActivity(intent);
+                        context.startActivity(intent);
                     }
                 });
             } else {
-                commandButton.setClickable(false);
-                commandButton.setVisibility(View.INVISIBLE);
+                itemView.setVisibility(View.INVISIBLE);
+//                textView.setClickable(false);
+//                textView.setVisibility(View.INVISIBLE);
             }
         }
     }

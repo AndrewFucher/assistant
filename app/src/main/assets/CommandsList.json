@@ -23,6 +23,13 @@
             "able": "enable"
         },
         {
+            "name" : "set an alarm <time>",
+            "nameBut": "set an alarm",
+            "description": "This command allows user to set an alarm",
+            "imageName" : "alarm_clock_svg",
+            "able": "enable"
+        },
+        {
             "name" : "mute",
             "nameBut": "mute",
             "description": "This command allows user to turn off everything that makes device 'alive'",

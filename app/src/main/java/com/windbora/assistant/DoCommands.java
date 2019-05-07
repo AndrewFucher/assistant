@@ -98,6 +98,8 @@ public class DoCommands{
             brightness = Integer.valueOf(string);
             android.provider.Settings.System.putInt(context.getContentResolver(),
                     android.provider.Settings.System.SCREEN_BRIGHTNESS, brightness);
+            android.provider.Settings.System.putInt(context.getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE, android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+            android.provider.Settings.System.putInt(context.getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, brightness);
         } catch (Exception e) {
             Toast.makeText(context, "Couldn't set brightness to " + string, Toast.LENGTH_SHORT).show();
         }
@@ -161,13 +163,19 @@ public class DoCommands{
         string = string.replace("set ", "");
         string = string.replace("alarm ", "");
 
+        // getting time for alarm
         String[] strings = string.split(" ");
         String[] time = new String[2];
         List<String> list = new ArrayList<>();
-        int hours;
-        int minutes;
+        int hours = 0;
+        int minutes = 0;
 
         for (String a : strings) {
+
+            if (a.contains("[0-9]+")) {
+                Toast.makeText(context, "True", Toast.LENGTH_SHORT).show();
+            }
+
             if (a.matches(".*\\d.*")) {
                 if (a.contains(":")) {
                     time = a.split(":");
@@ -191,31 +199,37 @@ public class DoCommands{
             minutes = Integer.valueOf(list.get(1));
         }
 
+        // setting alarm
+
         if (hours >= 0 && minutes >= 0) {
-            AlarmManager alarmMgr;
-            PendingIntent alarmIntent;
-            alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(context, AlarmReceiver.class);
-            alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-            // Set the alarm to start at 8:30 a.m.
-            Calendar calNow = Calendar.getInstance();
-            Calendar calSet = (Calendar) calNow.clone();
-
-            calSet.set(Calendar.HOUR_OF_DAY, hours);
-            calSet.set(Calendar.MINUTE, minutes);
-
-            if (calSet.compareTo(calNow) <= 0) {
-                // Today Set time passed, count to tomorrow
-                calSet.add(Calendar.DATE, 1);
-            }
-
-            // setRepeating() lets you specify a precise custom interval--in this case,
-            // 20 minutes.
-            //        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-            //                1000 * 60 * 20, alarmIntent);
-
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), alarmIntent);
+            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+            intent.putExtra(AlarmClock.EXTRA_HOUR, hours);
+            intent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+            context.startActivity(intent);
+//            AlarmManager alarmMgr;
+//            PendingIntent alarmIntent;
+//            alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//            Intent intent = new Intent(context, AlarmReceiver.class);
+//            alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+//
+//            // Set the alarm to start at 8:30 a.m.
+//            Calendar calNow = Calendar.getInstance();
+//            Calendar calSet = (Calendar) calNow.clone();
+//
+//            calSet.set(Calendar.HOUR_OF_DAY, hours);
+//            calSet.set(Calendar.MINUTE, minutes);
+//
+//            if (calSet.compareTo(calNow) <= 0) {
+//                // Today Set time passed, count to tomorrow
+//                calSet.add(Calendar.DATE, 1);
+//            }
+//
+//            // setRepeating() lets you specify a precise custom interval--in this case,
+//            // 20 minutes.
+//            //        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+//            //                1000 * 60 * 20, alarmIntent);
+//
+//            alarmMgr.set(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), alarmIntent);
         } else {
             Toast.makeText(context, "Couldn't set alarm", Toast.LENGTH_SHORT).show();
         }

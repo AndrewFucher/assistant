@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 
 import com.windbora.assistant.JsonParser;
 import com.windbora.assistant.R;
-import com.windbora.assistant.fragments.adapters.CommandsAdapter;
+import com.windbora.assistant.adapters.CommandsAdapter;
 import com.windbora.assistant.fragments.base.BaseFragment;
 
 public class Commands extends BaseFragment {

@@ -1,23 +1,20 @@
-package com.windbora.assistant.fragments.sharedpreferences;
+package com.windbora.assistant.sharedpreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 public class MySharedPreferences implements ISharedPreferences {
 
-    public final static String backgroundWorkIsActive = "background_work_is_active";
-    public final static String proximitySensorIsActive = "proximity_sensor_is_active";
+    private final String backgroundWorkIsActive = "background_work_is_active";
+    private final String proximitySensorIsActive = "proximity_sensor_is_active";
+    private final String sharedPreferencesName = "SettingData";
 
-    private Context context;
     private SharedPreferences sharedPreferences;
-//    private SharedPreferences.Editor editor;
-    private String sharedPreferencesName = "SettingData";
-    private int mode;
+    private boolean defaultValue = false;
 
-    public MySharedPreferences(int mode, Context context) {
-        this.mode = mode;
-        this.context = context;
-        this.sharedPreferences = this.context.getSharedPreferences(sharedPreferencesName, mode);
+    public MySharedPreferences(Context context) {
+
+        this.sharedPreferences = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
 //        this.editor = sharedPreferences.edit();
 //        this.editor.apply();
     }
@@ -31,24 +28,25 @@ public class MySharedPreferences implements ISharedPreferences {
 
     @Override
     public boolean getWorkInBackground() {
-        return this.sharedPreferences.getBoolean(backgroundWorkIsActive, false);
+        return this.sharedPreferences.getBoolean(backgroundWorkIsActive, defaultValue);
     }
 
     @Override
     public void setEnableProximitySensor() {
-        this.sharedPreferences.edit().putBoolean(proximitySensorIsActive, getEnableProximitySensor()).apply();
+        this.sharedPreferences.edit().putBoolean(proximitySensorIsActive, !getEnableProximitySensor()).apply();
 //        this.editor.putBoolean(proximitySensorIsActive, !sharedPreferences.getBoolean(proximitySensorIsActive, true));
 //        this.editor.apply();
     }
 
     @Override
     public boolean getEnableProximitySensor() {
-        return this.sharedPreferences.getBoolean(proximitySensorIsActive, false);
+        return this.sharedPreferences.getBoolean(proximitySensorIsActive, defaultValue);
     }
-
 
     @Override
     public int getMode() {
-        return this.mode;
+        return Context.MODE_PRIVATE;
     }
+
+
 }

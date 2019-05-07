@@ -15,11 +15,10 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 
-import com.windbora.assistant.MainActivity;
 import com.windbora.assistant.R;
 import com.windbora.assistant.backgroundservice.Listener;
 import com.windbora.assistant.fragments.base.BaseFragment;
-import com.windbora.assistant.fragments.sharedpreferences.MySharedPreferences;
+import com.windbora.assistant.sharedpreferences.MySharedPreferences;
 
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class SettingsAssistant extends BaseFragment {
     }
 
     private void accessPreferences() {
-        preferences = new MySharedPreferences(MODE_PRIVATE, getContext());
+        preferences = new MySharedPreferences(getContext());
     }
 
     private void setListeners() {
@@ -135,6 +134,6 @@ public class SettingsAssistant extends BaseFragment {
 
     @Override
     public String getName() {
-        return "Settings";
+        return "MySettings";
     }
 }

@@ -1,4 +1,4 @@
-package com.windbora.assistant;
+    package com.windbora.assistant;
 
 import android.Manifest;
 import android.content.Context;
@@ -13,48 +13,60 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseIntArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+//import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
+import com.windbora.assistant.adapters.CommandsAdapter;
 import com.windbora.assistant.backgroundservice.Listener;
-import com.windbora.assistant.fragments.Commands;
-import com.windbora.assistant.fragments.Play;
-import com.windbora.assistant.fragments.SettingsAssistant;
-import com.windbora.assistant.fragments.adapters.MyFragmentPagerAdapter;
-import com.windbora.assistant.fragments.base.BaseFragment;
-import com.windbora.assistant.fragments.sharedpreferences.MySharedPreferences;
-
-import java.util.ArrayList;
+//import com.windbora.assistant.fragments.Commands;
+//import com.windbora.assistant.fragments.Play;
+//import com.windbora.assistant.fragments.SettingsAssistant;
+//import com.windbora.assistant.fragments.adapters.MyFragmentPagerAdapter;
+//import com.windbora.assistant.fragments.base.BaseFragment;
+import com.windbora.assistant.sharedpreferences.MySharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
     public final static int DRAW_OVER_OTHER_APP_PERMISSION = 5469;
     public final static int REQUEST_PERMISSION = 10;
 
-    WindowManager windowManager;
-    View view;
+//    WindowManager windowManager;
+//    View view;
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    Context context;
+//    ViewPager viewPager;
+//    TabLayout tabLayout;
     SparseIntArray sparseIntArray;
-    Context activityContext;
+    RecyclerView recyclerView;
+//    Toolbar tool_bar_main;
+//    Context activityContext;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sparseIntArray = new SparseIntArray();
+        // Setting actionbar title
+        getSupportActionBar().setTitle(R.string.commands);
 
-        getContext();
+        sparseIntArray = new SparseIntArray();
         findElements();
-        addFragments();
+//        addFragments();
+        setRecyclerView();
+        setAnimation(recyclerView);
+
         if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
             requestAppPermissions(new String[]{
                     Manifest.permission.READ_CONTACTS,
@@ -69,8 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
         askForSystemOverlayPermission();
 
-        MySharedPreferences preferences = new MySharedPreferences(MODE_PRIVATE, context);
+        MySharedPreferences preferences = new MySharedPreferences( this);
 
+
+
+        //setSupportActionBar(tool_bar_main);
 
 //        Toast.makeText(context, String.valueOf(preferences.getWorkInBackground()), Toast.LENGTH_SHORT).show();
         if (preferences.getWorkInBackground()) {
@@ -79,51 +94,112 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+    }
+
+    private void setAnimation(RecyclerView recyclerViewAnimation) {
+        Context recyclerViewContext = recyclerViewAnimation.getContext();
+        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(recyclerViewContext, R.anim.layout_slide_from_bottom);
+
+        recyclerViewAnimation.setLayoutAnimation(controller);
+        recyclerViewAnimation.getAdapter().notifyDataSetChanged();
+    }
+
+    private void runAnimation(RecyclerView recyclerViewAnimation) {
+
+        recyclerViewAnimation.scheduleLayoutAnimation();
+    }
+
+    @Override
+    protected void onResume() {
+
+        runAnimation(recyclerView);
+
+        super.onResume();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.settings_item) {
+            startActivity(new Intent(this, SettingsActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setRecyclerView() {
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        try {
+            CommandsAdapter commandsAdapter = new CommandsAdapter(JsonParser.getDetails(this).getCommands(), this);
+            recyclerView.setAdapter(commandsAdapter);
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void askForSystemSettingWritePermission() {
-        if (!Settings.System.canWrite(context)) {
+        if (!Settings.System.canWrite(this)) {
             Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
             startActivity(intent);
         }
     }
 
-    private void getContext() {
-        context = this;
-    }
+
 
 
     public void startWidgetService(){
-        startService(new Intent(context, Listener.class));
+        startService(new Intent(this, Listener.class));
     }
 
     private void addFragments() {
         // Fragments
-        BaseFragment settings = new SettingsAssistant(); // settings
-        BaseFragment play = new Play();        // command from app
-        BaseFragment commands = new Commands(); // list of commands
+//        BaseFragment settings = new SettingsAssistant(); // settings
+//        BaseFragment play = new Play();        // command from app
+//        BaseFragment commands = new Commands(); // list of commands
 
         // Array of fragments
-        ArrayList<BaseFragment> fragments = new ArrayList<>();
-        fragments.add(play);
-        fragments.add(commands);
-        fragments.add(settings);
+//        ArrayList<BaseFragment> fragments = new ArrayList<>();
+//        fragments.add(play);
+//        fragments.add(commands);
+//        fragments.add(settings);
 
         // Adapters
-        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        adapter.setList(fragments);
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+//        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+//        adapter.setList(fragments);
+//        viewPager.setAdapter(adapter);
+//        tabLayout.setupWithViewPager(viewPager);
 
         // Tabs icons
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_play);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_commands);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_gear);
+//        tabLayout.getTabAt(0).setIcon(R.drawable.ic_play);
+//        tabLayout.getTabAt(1).setIcon(R.drawable.ic_commands);
+//        tabLayout.getTabAt(2).setIcon(R.drawable.ic_gear);
 
     }
 
     private void findElements() {
-        viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
+//        viewPager = findViewById(R.id.viewPager);
+//        tabLayout = findViewById(R.id.tabLayout);
+        recyclerView = findViewById(R.id.commandRecyclerView);
+        // tool_bar_main = findViewById(R.id.tool_bar_main);
     }
 
     private void askForSystemOverlayPermission() {
@@ -143,9 +219,9 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case DRAW_OVER_OTHER_APP_PERMISSION:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!Settings.canDrawOverlays(context)) {
+                    if (!Settings.canDrawOverlays(this)) {
                         //Permission is not available. Display error text.
-                        Toast.makeText(context, "Permission error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Permission error", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }

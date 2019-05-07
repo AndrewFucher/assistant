@@ -1,19 +1,14 @@
 package com.windbora.assistant.backgroundservice;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AppOpsManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,7 +19,6 @@ import android.widget.Toast;
 
 import com.windbora.assistant.R;
 import com.windbora.assistant.RunVoiceRecognition;
-import com.windbora.assistant.fragments.sharedpreferences.MySharedPreferences;
 
 import java.util.Calendar;
 
@@ -132,7 +126,7 @@ public class Listener extends Service {
 //        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 //                && !hasUsageStatsPermission(this.getBaseContext())) {
 ////            startActivity(new Intent(SettingsAssistant.ACTION_USAGE_ACCESS_SETTINGS));
-//            startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//            startActivity(new Intent(MySettings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 //        }
 //    }
 //
@@ -152,6 +146,9 @@ public class Listener extends Service {
         floatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+        ImageView imageView = floatingView.findViewById(R.id.command_button);
+        imageView.setImageResource(R.drawable.ic_microphone_listener);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             params = new WindowManager.LayoutParams(

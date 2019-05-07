@@ -4,12 +4,10 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.windbora.assistant.fragments.base.CommandsList;
+import com.windbora.assistant.base.CommandsList;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 

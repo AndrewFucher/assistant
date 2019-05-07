@@ -1,6 +1,5 @@
-package com.windbora.assistant.fragments.base;
+package com.windbora.assistant.base;
 
-import com.example.Command;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

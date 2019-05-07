@@ -22,11 +22,13 @@ public class RunVoiceRecognition extends Activity{
     public static void startVoiceRecognitionActivity(Context context) {
         Intent voiceRecognitionIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
-        String language = "en-GB";
+        String languageEnglishGB = Locale.UK.toString();
+        String languageEnglishUS = Locale.US.toString();
 
         voiceRecognitionIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        voiceRecognitionIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
-        voiceRecognitionIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, language);
+        voiceRecognitionIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, languageEnglishGB);
+        voiceRecognitionIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, languageEnglishUS);
+        voiceRecognitionIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, languageEnglishGB);
 
         ((Activity) context).startActivityForResult(voiceRecognitionIntent, VOICE_RECOGNITION_REQUEST_CODE);
     }
