@@ -8,6 +8,7 @@ public class MySharedPreferences implements ISharedPreferences {
     private final String backgroundWorkIsActive = "background_work_is_active";
     private final String proximitySensorIsActive = "proximity_sensor_is_active";
     private final String sharedPreferencesName = "SettingData";
+    private final String firstTime = "first_time_use";
 
     private SharedPreferences sharedPreferences;
     private boolean defaultValue = false;
@@ -41,6 +42,16 @@ public class MySharedPreferences implements ISharedPreferences {
     @Override
     public boolean getEnableProximitySensor() {
         return this.sharedPreferences.getBoolean(proximitySensorIsActive, defaultValue);
+    }
+
+    @Override
+    public void setFirstTime() {
+        this.sharedPreferences.edit().putBoolean(firstTime, defaultValue).apply();
+    }
+
+    @Override
+    public boolean getFirstTime() {
+        return this.sharedPreferences.getBoolean(firstTime, true);
     }
 
     @Override

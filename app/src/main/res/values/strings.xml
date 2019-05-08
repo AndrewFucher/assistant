@@ -88,6 +88,7 @@
     <string name="run_in_background">Run in background</string>
     <string name="does_not_work_in_background">Does not work in background</string>
     <string name="does_work_in_background">Does work in background</string>
+    <string name="finish">FINISH</string>
     <!--<string name="run_in_background">Run in background</string>-->
 
     <!-- My settings values -->

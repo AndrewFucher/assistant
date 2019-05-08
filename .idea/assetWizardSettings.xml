@@ -174,8 +174,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_microphone_listener" />
-                            <entry key="sourceFile" value="D:\work\SVG\Шар 1.svg" />
+                            <entry key="outputName" value="ic_right_arrow" />
+                            <entry key="sourceFile" value="D:\work\right_arrow.svg" />
                           </map>
                         </option>
                       </PersistentState>

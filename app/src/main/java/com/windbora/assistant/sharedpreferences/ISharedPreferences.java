@@ -8,6 +8,9 @@ public interface ISharedPreferences {
     void setEnableProximitySensor();
     boolean getEnableProximitySensor();
 
+    void setFirstTime();
+    boolean getFirstTime();
+
     int getMode();
 
 }

@@ -25,6 +25,7 @@ import android.view.View;
 //import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.windbora.assistant.adapters.CommandsAdapter;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 //    TabLayout tabLayout;
     SparseIntArray sparseIntArray;
     RecyclerView recyclerView;
+    ImageView imageView;
 //    Toolbar tool_bar_main;
 //    Context activityContext;
 
@@ -58,11 +60,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MySharedPreferences preferences = new MySharedPreferences( this);
+
+        if (preferences.getFirstTime()) {
+            startActivity(new Intent(this, Tutorial.class));
+            preferences.setFirstTime();
+        }
+
         // Setting actionbar title
         getSupportActionBar().setTitle(R.string.commands);
 
         sparseIntArray = new SparseIntArray();
         findElements();
+        setListeners();
 //        addFragments();
         setRecyclerView();
         setAnimation(recyclerView);
@@ -81,10 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
         askForSystemOverlayPermission();
 
-        MySharedPreferences preferences = new MySharedPreferences( this);
-
-
-
         //setSupportActionBar(tool_bar_main);
 
 //        Toast.makeText(context, String.valueOf(preferences.getWorkInBackground()), Toast.LENGTH_SHORT).show();
@@ -92,6 +98,17 @@ public class MainActivity extends AppCompatActivity {
             startWidgetService();
 //            floatingWindow();
         }
+    }
+
+    private void setListeners() {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RunVoiceRecognition.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -199,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
 //        viewPager = findViewById(R.id.viewPager);
 //        tabLayout = findViewById(R.id.tabLayout);
         recyclerView = findViewById(R.id.commandRecyclerView);
+        imageView = findViewById(R.id.playButton);
         // tool_bar_main = findViewById(R.id.tool_bar_main);
     }
 
